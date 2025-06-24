@@ -1,96 +1,69 @@
-# 🛒 Amazon Price Tracker
+Amazon Price Tracker
+A Python script that monitors the price of a specified Amazon product and sends an email notification when the price drops below a user-defined threshold.
+Features
 
-This is a simple Python script that tracks the price of a product on Amazon India and sends an email alert when the price drops below a specified threshold.
+Scrapes product price and title from an Amazon product page using BeautifulSoup.
+Sends email alerts via SMTP when the price falls below the target price.
+Uses environment variables for secure email credential management.
+Configurable for any Amazon product URL and target price.
 
----
+Requirements
 
-## 🚀 Features
+Python 3.x
+Required Python libraries:pip install beautifulsoup4 requests python-dotenv
 
-- Scrapes product title and price from an Amazon India product page
-- Sends an email notification if the price is below your target
-- Uses environment variables for secure credential handling
-- Easy to automate with Task Scheduler or `cron`
 
----
+A Gmail account with an App Password for SMTP access.
 
-## 🧰 Requirements
+Setup
 
-- Python 3.7 or higher
-- Libraries:
-  - `requests`
-  - `beautifulsoup4`
-  - `python-dotenv`
-
-Install all dependencies with:
-
-```bash
-pip install -r requirements.txt
-
-⚙️ Setup Instructions
-1. Clone the Repository
-bash
-Copy
-Edit
+Clone the repository:
 git clone https://github.com/your-username/amazon-price-tracker.git
 cd amazon-price-tracker
-2. Create a .env File
-Create a file named .env in the root directory using this template:
 
-env
-Copy
-Edit
-SMTP_ADDRESS="smtp.gmail.com"
+
+Install dependencies:
+pip install -r requirements.txt
+
+
+Configure environment variables:
+
+Create a .env file in the project root.
+Add the following:SMTP_ADDRESS="smtp.gmail.com"
 EMAIL_ADDRESS="your_email@gmail.com"
 EMAIL_PASSWORD="your_app_password"
-✅ If you’re using Gmail, you must generate an App Password instead of using your actual email password (if 2FA is enabled).
 
-3. Modify main.py
-Change the url variable to the Amazon product you want to track
 
-Set your desired BUY_PRICE in INR
+Replace your_email@gmail.com with your Gmail address and your_app_password with your Gmail App Password.
 
-4. Run the Script
-bash
-Copy
-Edit
+
+Update the script:
+
+Open main.py and modify the url variable to the Amazon product URL you want to track.
+Set the BUY_PRICE variable to your desired price threshold.
+
+
+
+Usage
+Run the script to check the product price and receive an email if the price is below the target:
 python main.py
-You’ll see output like:
 
-Copy
-Edit
-54990.0
-Corsair Broadcast Camcorder 1080p60 Compact
-✅ Email sent successfully!
-🗓 Automate the Script
-To check prices daily or hourly:
 
-Windows: Use Task Scheduler
+The script prints the current price and product title to the console.
+If the price is below BUY_PRICE, it sends an email with the product title, price, and URL.
 
-Linux/macOS: Add a cron job
+Example
+For the product URL in main.py (Corsair Broadcast Camcorder), if BUY_PRICE = 60000 and the price drops to ₹55,000, you'll receive an email like:
+Subject: Amazon Price Alert!
 
-Example cron job to run daily at 9 AM:
+Corsair Broadcast Camcorder is on sale for ₹55,000!
+https://www.amazon.in/Corsair-Broadcast-Camcorder-1080p60-Compact/dp/B07K3FN5MR/...
 
-cron
-Copy
-Edit
-0 9 * * * /usr/bin/python3 /path/to/your/main.py
-📁 Project Structure
-bash
-Copy
-Edit
-amazon-price-tracker/
-├── .env.example       # Environment variable template (do NOT upload .env)
-├── main.py            # Main tracking and email script
-├── requirements.txt   # Python dependencies
-└── README.md          # Project documentation
-⚠️ Disclaimer
-This script is for educational purposes only.
+Notes
 
-Web scraping Amazon may violate their terms of service — use responsibly.
+Amazon's bot protection may block requests if headers are not set properly. The script includes a basic User-Agent header to mimic a browser.
+To avoid being blocked, do not run the script too frequently. Consider scheduling it (e.g., using cron or a task scheduler) to run once or twice daily.
+Ensure the Amazon URL points to the correct product variation, as prices may differ.
 
-Amazon layout may change — in which case the scraper may need updates.
-
-👤 Author
-Devansh Palan
-🔗 GitHub
-
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
